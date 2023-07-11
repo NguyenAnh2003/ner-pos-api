@@ -13,9 +13,11 @@ async def index():
 # predict ner
 @app.post('/nlp/ner')
 async def ner_prediction(sentence: str):
-    return ner_predictor(sentence)
+    # tokens = await ner_predictor(sentence)
+    return sentence
 
 # predict pos
 @app.post('/nlp/pos')
 async def pos_prediction(sentence: str):
-    return pos_predictor(sentence)
+    tokens = await pos_predictor(sentence)
+    return tokens
