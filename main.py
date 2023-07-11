@@ -4,17 +4,18 @@ from predictor.pos_predictor import pos_predictor
 app = FastAPI()
 
 # uvicorn main:app --reload
+# install requirement : pip install -r requirements.txt
 
-@app.get("/")
+@app.get('/')
 async def index():
     return {"hello world": "hello from nguyenanh"}
 
 # predict ner
-@app.post("/nlp/ner")
+@app.post('/nlp/ner')
 async def ner_prediction(sentence: str):
     return ner_predictor(sentence)
 
 # predict pos
-@app.post("/nlp/pos")
+@app.post('/nlp/pos')
 async def pos_prediction(sentence: str):
     return pos_predictor(sentence)
