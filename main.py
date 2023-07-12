@@ -17,12 +17,21 @@ async def index():
 @app.post('/nlp/ner')
 def ner_prediction(sentence: str):
     tokens = ner_predictor(sentence)
-    x = [' thủ_đô ', ('Việt_Nam', 'Địa điểm', '#84a59d'), ' là ', ('Hà_Nội', 'Địa điểm', '#84a59d')]
-
-    return tokens
+    result = []
+    for sublist in tokens:
+        word = sublist[0]
+        tag = sublist[1]
+        color = sublist[2]
+        result.append({"word": word, "tag": tag, "color": color})
+    return result
 
 # predict pos
 @app.post('/nlp/pos')
 def pos_prediction(sentence: str):
     tokens = pos_predictor(sentence)
-    return tokens
+    result = []
+    for sublist in tokens:
+        word = sublist[0]
+        tag = sublist[1]
+        result.append({"word": word, "tag": tag})
+    return result

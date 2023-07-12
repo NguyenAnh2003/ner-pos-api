@@ -14,5 +14,5 @@ def ner_predictor(sentence: str):
         elif "MISC" in token[1]:
             tokens.append((token[0], "MISCELLANEOUS", "#edfcd9"))
         else:
-            tokens.append(" " + token[0] + " ")
+            tokens.append((token[0], " ", " "))
     return convert_ner(tokens)

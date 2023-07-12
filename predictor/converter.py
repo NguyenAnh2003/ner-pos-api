@@ -19,8 +19,8 @@ def convert_pos(tokens):
 
 def convert_ner(tokens):
     def switch(text):
-        x = ["PERSON", "LOCATION", "ORGANIZATION", "MISCELLANEOUS"]
-        y = ["Người", "Địa điểm", "Tổ chức", "khác"]
+        x = ["PERSON", "LOCATION", "ORGANIZATION", "MISCELLANEOUS", " "]
+        y = ["Người", "Địa điểm", "Tổ chức", "khác", " "]
         for i,e in enumerate(x):
             e = text
             if e == x[i]:
@@ -28,9 +28,5 @@ def convert_ner(tokens):
     #
     result = []
     for i,e in enumerate(tokens):
-        if type(e) == tuple:
-            # print('ner', e[0], switch(e[1]))
-            result.append((e[0], switch(e[1]), e[2]))
-        else:
-            result.append(e)
+        result.append((e[0], switch(e[1]), e[2]))
     return result
