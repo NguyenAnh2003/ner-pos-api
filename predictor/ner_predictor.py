@@ -15,5 +15,4 @@ def ner_predictor(sentence: str):
             tokens.append((token[0], "MISCELLANEOUS", "#edfcd9"))
         else:
             tokens.append(" " + token[0] + " ")
-
-    return convert_ner(sentence)
+    return convert_ner(tokens)
