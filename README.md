@@ -7,5 +7,49 @@ run app
 ```python
 uvicorn main:app --reload
 ```
-## Extract with Vietnamese
-![image](https://github.com/NguyenAnh2003/ner_pos_api/assets/94124019/c1418d55-b255-4f4f-af91-4aff0f4c1a9b)
+## Extract with Vietnamese (POS)
+```
+[
+  {
+    "word": "thủ_đô",
+    "tag": "danh từ"
+  },
+  {
+    "word": "Việt_Nam",
+    "tag": "danh từ riêng"
+  },
+  {
+    "word": "là",
+    "tag": "động từ"
+  },
+  {
+    "word": "Hà_Nội",
+    "tag": "danh từ riêng"
+  }
+]
+```
+## Extract with Vietnamese (NER)
+```
+[
+  {
+    "word": "thủ_đô",
+    "tag": " ",
+    "color": " "
+  },
+  {
+    "word": "Việt_Nam",
+    "tag": "Địa điểm",
+    "color": "#f4cfdb"
+  },
+  {
+    "word": "là",
+    "tag": " ",
+    "color": " "
+  },
+  {
+    "word": "Hà_Nội",
+    "tag": "Địa điểm",
+    "color": "#f4cfdb"
+  }
+]
+```
