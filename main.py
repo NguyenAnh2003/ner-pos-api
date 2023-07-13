@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from predictor.ner_predictor import ner_predictor
 from predictor.pos_predictor import pos_predictor
 from fastapi.responses import JSONResponse
+from classes.pos_req import PosReq
+from classes.ner_req import NerReq
 import json
 
 
@@ -15,8 +17,8 @@ async def index():
 
 # predict ner
 @app.post('/nlp/ner')
-def ner_prediction(sentence: str):
-    tokens = ner_predictor(sentence)
+def ner_prediction(req: NerReq):
+    tokens = ner_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]
@@ -27,8 +29,8 @@ def ner_prediction(sentence: str):
 
 # predict pos
 @app.post('/nlp/pos')
-def pos_prediction(sentence: str):
-    tokens = pos_predictor(sentence)
+def pos_prediction(req: PosReq):
+    tokens = pos_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]
