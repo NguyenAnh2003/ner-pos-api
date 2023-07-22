@@ -15,7 +15,7 @@ from os.path import join, dirname
 API = "http://127.0.0.1:8000/api/word_segmentation"
 
 def create_word_list(req: Req):
-    word_list2 = []
+    word_list = []
     payload = {
         "string": req.string
     }
@@ -23,7 +23,6 @@ def create_word_list(req: Req):
         'Content-Type': 'application/json',
         # 'token': 'Voice - tm7M...'
     }
-    word_list = []
     response = requests.post(API, json=payload, headers=headers)
     if response.status_code == 200:
         data = response.json()
@@ -32,19 +31,12 @@ def create_word_list(req: Req):
         for i in ls:
             print(i)
             word_list.append(i)
+        print(word_list)
     else:
         print('Error:', response.status_code)
-    output_list = []
-    previous_token = None
-
-    for token in word_list:
-        if token == '.' and previous_token == '.':
-            output_list[-1] = '...'
-        else:
-            output_list.append(token)
-            previous_token = token
-    word_list2.append(output_list)
-    return word_list2
+    rs = [word_list]
+    print(rs)
+    return rs
 
 
 def final(word_list):
