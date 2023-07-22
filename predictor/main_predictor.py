@@ -4,6 +4,7 @@ import numpy as np
 import requests,json
 from models.entity_dataset import EntityDataset
 from loader import model, device, enc_tag, enc_pos
+from classes.Req import Req
 # from dotenv import load_dotenv
 import os
 from os.path import join, dirname
@@ -11,51 +12,38 @@ from os.path import join, dirname
 # dotenv_path = join(dirname(__file__), '.env')
 # load_dotenv(dotenv_path)
 
+API = "http://127.0.0.1:8000/api/word_segmentation"
 
-def sent_seg(text):
-    sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
-    sents = re.split(sent_reg, text)
-    print(sents)
-    return sents
-
-
-API = "https://viettelgroup.ai/nlp/api/v1/segment"
-
-
-def create_word_list(sentence):
-    sentences = sent_seg(sentence)
+def create_word_list(req: Req):
     word_list2 = []
-    for sentence in sentences:
-        payload = {
-            "sentence": sentence
-        }
-        headers = {
-            'Content-Type': 'application/json',
-            'token': 'Voice - tm7M...'
-        }
-        word_list = []
-        word_list1 = []
-        response = requests.post(API, json=payload, headers=headers)
-        if response.status_code == 200:
-            data = response.json()
-            word_list1 = [item['word'] for item in data['result']]
-            for word in word_list1:
-                words = word.split()
-                word = "_".join(words)
-                word_list.append(word)
+    payload = {
+        "string": req.string
+    }
+    headers = {
+        'Content-Type': 'application/json',
+        # 'token': 'Voice - tm7M...'
+    }
+    word_list = []
+    word_list1 = []
+    response = requests.post(API, json=payload, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+        print(data)
+        word_list1 = [item for item in data['tag']]
+        for word in word_list1:
+            word_list.append(word)
+    else:
+        print('Error:', response.status_code)
+    output_list = []
+    previous_token = None
+
+    for token in word_list:
+        if token == '.' and previous_token == '.':
+            output_list[-1] = '...'
         else:
-
-            print('Error:', response.status_code)
-        output_list = []
-        previous_token = None
-
-        for token in word_list:
-            if token == '.' and previous_token == '.':
-                output_list[-1] = '...'
-            else:
-                output_list.append(token)
-                previous_token = token
-        word_list2.append(output_list)
+            output_list.append(token)
+            previous_token = token
+    word_list2.append(output_list)
     return word_list2
 
 
@@ -88,5 +76,6 @@ def final(word_list):
   return result
 
 
-def annotate_text(text):
-    return final(create_word_list(text))
+def annotate_text(text: Req):
+    # return final(create_word_list(text))
+    return create_word_list(text)

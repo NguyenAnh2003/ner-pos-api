@@ -1,7 +1,7 @@
 from predictor.main_predictor import annotate_text
 from predictor.converter import convert_ner
-
-def ner_predictor(sentence: str):
+from classes.Req import Req
+def ner_predictor(sentence: Req):
     text_process = annotate_text(sentence)
     data = [(text[0], text[1]) for text in text_process]
     tokens = []

@@ -4,11 +4,13 @@ from predictor.pos_predictor import pos_predictor
 from fastapi.responses import JSONResponse
 from classes.pos_req import PosReq
 from classes.ner_req import NerReq
+from classes.Req import Req
 import json
 
 
 app = FastAPI()
 # uvicorn main:app --reload
+# uvicorn main:app --port 8001 --reload
 # install requirement : pip install -r requirements.txt
 
 @app.get('/')
@@ -17,8 +19,8 @@ async def index():
 
 # predict ner
 @app.post('/nlp/ner')
-def ner_prediction(req: NerReq):
-    tokens = ner_predictor(req.sentence)
+def ner_prediction(req: Req):
+    tokens = ner_predictor(req)
     result = []
     for sublist in tokens:
         word = sublist[0]
