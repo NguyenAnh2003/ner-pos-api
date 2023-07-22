@@ -1,4 +1,12 @@
 # ner_pos_api
+initialize env
+```python
+python -m venv venv
+```
+activate env
+```python
+.\venv\Scripts\activate
+```
 install dependencies
 ```python
 pip install -r requirements.txt
