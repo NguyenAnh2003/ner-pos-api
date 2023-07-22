@@ -31,8 +31,8 @@ def ner_prediction(req: Req):
 
 # predict pos
 @app.post('/nlp/pos')
-def pos_prediction(req: PosReq):
-    tokens = pos_predictor(req.sentence)
+def pos_prediction(req: Req):
+    tokens = pos_predictor(req)
     result = []
     for sublist in tokens:
         word = sublist[0]

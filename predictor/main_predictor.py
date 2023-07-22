@@ -24,14 +24,14 @@ def create_word_list(req: Req):
         # 'token': 'Voice - tm7M...'
     }
     word_list = []
-    word_list1 = []
     response = requests.post(API, json=payload, headers=headers)
     if response.status_code == 200:
         data = response.json()
         print(data)
-        word_list1 = [item for item in data['tag']]
-        for word in word_list1:
-            word_list.append(word)
+        ls = [i for i in data['tag']]
+        for i in ls:
+            print(i)
+            word_list.append(i)
     else:
         print('Error:', response.status_code)
     output_list = []
@@ -77,5 +77,4 @@ def final(word_list):
 
 
 def annotate_text(text: Req):
-    # return final(create_word_list(text))
-    return create_word_list(text)
+    return final(create_word_list(text))
