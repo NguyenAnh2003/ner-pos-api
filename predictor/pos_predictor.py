@@ -1,7 +1,6 @@
 from predictor.main_predictor import annotate_text
 from predictor.converter import convert_pos
-from classes.Req import Req
-def pos_predictor(req: Req):
+def pos_predictor(req: str):
     text_process = annotate_text(req)
     # print(text_process)
     tokens = []

@@ -14,27 +14,36 @@ from os.path import join, dirname
 
 API = "http://127.0.0.1:8000/api/word_segmentation"
 
-def create_word_list(req: Req):
+def sent_seg(text):
+    sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
+    sents = re.split(sent_reg, text)
+    print(sents)
+    return sents
+
+def create_word_list(text):
     word_list = []
-    payload = {
-        "string": req.string
-    }
-    headers = {
-        'Content-Type': 'application/json',
-        # 'token': 'Voice - tm7M...'
-    }
-    response = requests.post(API, json=payload, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        print(data)
-        ls = [i for i in data['tag']]
-        for i in ls:
-            print(i)
-            word_list.append(i)
-        print(word_list)
-    else:
-        print('Error:', response.status_code)
-    rs = [word_list]
+    rs = []
+    sentences = sent_seg(text)
+    for sentence in sentences:
+        payload = {
+            "string": sentence
+        }
+        headers = {
+            'Content-Type': 'application/json',
+            # 'token': 'Voice - tm7M...'
+        }
+        response = requests.post(API, json=payload, headers=headers)
+        if response.status_code == 200:
+            data = response.json()
+            print(data)
+            ls = [i for i in data['tag']]
+            for i in ls:
+                print(i)
+                word_list.append(i)
+            print(word_list)
+        else:
+            print('Error:', response.status_code)
+        rs.append(word_list)
     print(rs)
     return rs
 
@@ -68,5 +77,5 @@ def final(word_list):
   return result
 
 
-def annotate_text(text: Req):
+def annotate_text(text: str):
     return final(create_word_list(text))
