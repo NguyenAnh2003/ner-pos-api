@@ -44,16 +44,7 @@ def create_word_list(text):
         else:
             print('Error:', response.status_code)
 
-        output_list = []
-        previous_token = None
-
-        for token in word_list:
-            if token == '.' and previous_token == '.':
-                output_list[-1] = '...'
-            else:
-                output_list.append(token)
-                previous_token = token
-        rs.append(output_list)
+        rs.append(word_list)
     print(rs)
     return rs
 

@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from predictor.ner_predictor import ner_predictor
 from predictor.pos_predictor import pos_predictor
+from predictor.main_predictor import create_word_list
 from classes.Req import Req
 
 
@@ -36,3 +37,8 @@ def pos_prediction(req: Req):
         tag = sublist[1]
         result.append({"word": word, "tag": tag})
     return result
+
+@app.post('/nlp/segment')
+def segment(req: Req):
+    tokens = [create_word_list(req.string)]
+    return tokens
