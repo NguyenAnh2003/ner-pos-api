@@ -12,7 +12,7 @@ from os.path import join, dirname
 # dotenv_path = join(dirname(__file__), '.env')
 # load_dotenv(dotenv_path)
 
-API = "http://127.0.0.1:8000/api/word_segmentation"
+API = "http://127.0.0.1:8080/api/word_segmentation"
 
 def sent_seg(text):
     sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
