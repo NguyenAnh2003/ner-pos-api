@@ -46,16 +46,17 @@ def create_word_list(sentence):
         else:
 
             print('Error:', response.status_code)
-        output_list = []
-        previous_token = None
-
-        for token in word_list:
-            if token == '.' and previous_token == '.':
-                output_list[-1] = '...'
-            else:
-                output_list.append(token)
-                previous_token = token
-        word_list2.append(output_list)
+        # output_list = []
+        # previous_token = None
+        #
+        # for token in word_list:
+        #     if token == '.' and previous_token == '.':
+        #         output_list[-1] = '...'
+        #     else:
+        #         output_list.append(token)
+        #         previous_token = token
+        # word_list2.append(output_list)
+        word_list2.append(word_list)
     return word_list2
 
 
