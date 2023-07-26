@@ -3,10 +3,20 @@ from predictor.ner_predictor import ner_predictor
 from predictor.pos_predictor import pos_predictor
 from classes.Req import Req
 from predictor.main_predictor import create_word_list
-
+from fastapi.middleware.cors import CORSMiddleware
 app = FastAPI()
 # uvicorn main:app --reload
 # install requirement : pip install -r requirements.txt
+origins = [
+    "http://localhost:3000",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get('/')
 async def index():
