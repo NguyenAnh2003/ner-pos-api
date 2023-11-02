@@ -1,7 +1,8 @@
 import torch
 import re
 import numpy as np
-import requests,json
+import requests
+import json
 from models.entity_dataset import EntityDataset
 from loader import model, device, enc_tag, enc_pos
 from classes.Req import Req
@@ -12,13 +13,15 @@ from os.path import join, dirname
 # dotenv_path = join(dirname(__file__), '.env')
 # load_dotenv(dotenv_path)
 
-API = "http://127.0.0.1:8080/api/word_segmentation"
+API = "http://127.0.0.1:8000/api/word_segmentation"
+
 
 def sent_seg(text):
     sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
     sents = re.split(sent_reg, text)
     print(sents)
     return sents
+
 
 def create_word_list(text):
     rs = []
@@ -30,7 +33,6 @@ def create_word_list(text):
         }
         headers = {
             'Content-Type': 'application/json',
-            # 'token': 'Voice - tm7M...'
         }
         response = requests.post(API, json=payload, headers=headers)
         if response.status_code == 200:
@@ -50,32 +52,32 @@ def create_word_list(text):
 
 
 def final(word_list):
-  result = []
-  for i in word_list:
-    temp = []
-    test_dataset = EntityDataset(
-        texts=[i],
-        pos=[[0] * len(i)],
-        tags=[[0] * len(i)]
-    )
+    result = []
+    for i in word_list:
+        temp = []
+        test_dataset = EntityDataset(
+            texts=[i],
+            pos=[[0] * len(i)],
+            tags=[[0] * len(i)]
+        )
 
-    with torch.no_grad():
-        data = test_dataset[0]
-        for k, v in data.items():
-            data[k] = v.to(device).unsqueeze(0)
-        tag, pos, _, llll = model(**data)
+        with torch.no_grad():
+            data = test_dataset[0]
+            for k, v in data.items():
+                data[k] = v.to(device).unsqueeze(0)
+            tag, pos, _, llll = model(**data)
 
-    tag = tag[0]
-    pos = pos[0]
-    tag = np.array(tag)
-    poss = np.array(pos)
-    ner = enc_tag.inverse_transform(tag.flatten())
-    pos = enc_pos.inverse_transform(poss.flatten())
+        tag = tag[0]
+        pos = pos[0]
+        tag = np.array(tag)
+        poss = np.array(pos)
+        ner = enc_tag.inverse_transform(tag.flatten())
+        pos = enc_pos.inverse_transform(poss.flatten())
 
-    for j in range(len(i)):
-        temp.append((i[j], ner[j], pos[j]))
-    result += temp
-  return result
+        for j in range(len(i)):
+            temp.append((i[j], ner[j], pos[j]))
+        result += temp
+    return result
 
 
 def annotate_text(text: str):
