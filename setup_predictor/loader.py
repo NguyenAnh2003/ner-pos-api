@@ -1,6 +1,6 @@
 import torch
 import joblib
-from temp.models.entity_model import EntityModel
+from model.EntityCustomModel import EntityModel
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 

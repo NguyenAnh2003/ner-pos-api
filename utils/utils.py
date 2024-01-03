@@ -1,3 +1,14 @@
+import yaml
+
+# load params using yaml
+def load_params(path: str):
+    """
+    :param path: dir to yaml file
+    :return: params included in yaml file
+    """
+    return yaml.safe_load(open(path, 'r', encoding='utf8'))
+
+# convert pos tag
 def convert_pos(tokens):
     def switch(text):
         x = ["A", "C", "CH", "E", "FW", "I", "L", "M", "N",
@@ -17,6 +28,7 @@ def convert_pos(tokens):
         result.append((i[0], switch(i[1])))
     return result
 
+# convert ner tag
 def convert_ner(tokens):
     def switch(text):
         x = ["PERSON", "LOCATION", "ORGANIZATION", "MISCELLANEOUS", " "]

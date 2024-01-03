@@ -1,0 +1,7 @@
+max_len: 149
+train_batch_size: 32
+valid_batch_size: 8
+epochs: 10
+base_model: vinai/phobert-base-v2
+tokenizer: 'setup by transformer'
+#    TOKENIZER = transformers.AutoTokenizer.from_pretrained(BASE_MODEL_PATH, do_lower_case=True)
