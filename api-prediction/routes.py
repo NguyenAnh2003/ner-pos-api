@@ -1,8 +1,8 @@
 from fastapi import FastAPI
 from setup_predictor.setup_predictor import *
-from body.request_body import RequestBody
+from request_body import RequestBody
 from setup_predictor.main_predictor import create_word_list
-from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
 # uvicorn main:app --reload
 # install requirement : pip install -r requirements.txt
