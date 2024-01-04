@@ -6,15 +6,15 @@ from service import *
 router = APIRouter() # fast router
 
 @router.post('/danangnlp/ner', status_code=status.HTTP_201_CREATED)
-def entity_extraction(request: RequestBody):
-    ner_result = ner_service(request.sentence)
+async def entity_extraction(request: RequestBody):
+    ner_result = await ner_service(request.sentence)
     return ner_result
 
 @router.post('/danangnlp/pos', status_code=status.HTTP_201_CREATED)
-def pos_tag(request: RequestBody):
+async def pos_tag(request: RequestBody):
     """
     :param request: raw sentence
     :return: Pos response model
     """
-    pos_result = pos_service(request.sentence)
+    pos_result = await pos_service(request.sentence)
     return pos_result
