@@ -1,23 +1,27 @@
 from predictor.main_predictor import annotate_text
 from predictor.converter import convert_ner
 
+
 def ner_predictor(sentence: str):
     text_process = annotate_text(sentence)
     data = [(text[0], text[1]) for text in text_process]
     tokens = []
-    filtered_data = []
-    for i in range(len(data)):
-        if "B-" in data[i][1]:
-            if i+1 >= len(data)-1:
-                break
-            else:
-                if "I-" in data[i+1][1]:
-                    data[i] = (data[i][0]+"_"+data[i+1][0], data[i][1])
-    filtered_data = [item for item in data if item[1] != 'I-PER' and item[1]
-                     != 'I-LOC' and item[1] != 'I-MISC' and item[1] != 'I-ORG']
+    i = 0
 
-    # including color for streamlit in FE
-    for token in filtered_data:
+    while i < len(data):
+        if 'B-' in data[i][1]:
+            if i + 1 < len(data) and 'I-' in data[i + 1][1]:
+                merged_entity = data[i][0] + "_" + data[i + 1][0]
+                label = data[i][1]
+                del data[i:i + 2]
+                data.insert(i, (merged_entity, label)) 
+            else:
+                i += 1
+        else:
+            i += 1
+
+    # including color for streamlit and Reactjs in FE
+    for token in data:
         if "PER" in token[1]:
             tokens.append((token[0], "PERSON", "#f5cac3"))
         elif "ORG" in token[1]:
