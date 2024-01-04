@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status
 from request_body import RequestBody
-from service import *
+from services import *
 """ defining api router """
 
 router = APIRouter() # fast router
