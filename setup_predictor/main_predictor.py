@@ -2,7 +2,7 @@ import torch
 import re
 import numpy as np
 import requests
-from dataloader.my_dataloader import EntityDataset
+from dataloader.EntityDataset import EntityDataset
 import json
 from loader import model, device, enc_tag, enc_pos
 # from dotenv import load_dotenv
