@@ -5,14 +5,13 @@ import transformers
 import torch.nn.functional as F
 from utils.utils import load_params
 
-# setup params
-params = load_params("../config/training-params.yml")
 class EntityModel(nn.Module):
-    def __init__(self, num_tag, num_pos):
+    def __init__(self, num_tag, num_pos, params: str = "../config/configs-variables.yml"):
         super(EntityModel, self).__init__()
+        self.params = load_params(params) # config direcly params
         self.num_tag = num_tag
         self.num_pos = num_pos
-        self.phobert = transformers.AutoModel.from_pretrained(params['base_model'],return_dict=False)
+        self.phobert = transformers.AutoModel.from_pretrained(self.params['base_model'],return_dict=False)
         self.bert_drop_1 = nn.Dropout(0.3)
         self.bert_drop_2 = nn.Dropout(0.3)
         self.out_tag = nn.Linear(768, self.num_tag)

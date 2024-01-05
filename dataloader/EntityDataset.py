@@ -2,23 +2,20 @@ import torch
 from utils.utils import load_params
 from transformers import AutoTokenizer
 
-# setup params
-params = load_params("../config/training-params.yml")
-
 class EntityDataset:
-    """
-    setup params directly in this file
-    """
-    def __init__(self, texts, pos, tags):
+    def __init__(self, texts, pos, tags, path: str = "../config/configs-variables.yml"):
+        super().__init__()
+        """ setup params directly in this file """
+        self.params = load_params(path) # setup params
         self.texts = texts
         self.pos = pos
         self.tags = tags
         # config with params
-        self.max_len = params['max_len']
-        self.train_batch_size = params['train_batch_size']
-        self.valid_batch_size = params['valid_batch_size']
-        self.epochs = params['epochs']
-        self.base_model = params['base_model']
+        self.max_len = self.params['max_len']
+        self.train_batch_size = self.params['train_batch_size']
+        self.valid_batch_size = self.params['valid_batch_size']
+        self.epochs = self.params['epochs']
+        self.base_model = self.params['base_model']
         self.tokenizer = AutoTokenizer.from_pretrained(self.base_model,
                                                        do_lower_case=True)
 
