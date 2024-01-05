@@ -1,4 +1,4 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, HTTPException
 from request_body import RequestBody
 from services import *
 """ defining api router """

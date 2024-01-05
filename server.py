@@ -1,6 +1,8 @@
-from fastapi import FastAPI
+from fastapi import status
 from api.routes import router # setup defined router
-# define app
-app = FastAPI() # get app config
+from config.app_config import setup_app
+
+# include defined app
+app = setup_app()
 
 app.include_router(router) # include route defined
