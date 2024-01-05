@@ -1,7 +1,6 @@
 from setup_predictor.main_predictor import annotate_text
 from utils.utils import *
 
-
 # setup NER predictor
 def ner_predictor(sentence: str):
     """ NER predictor

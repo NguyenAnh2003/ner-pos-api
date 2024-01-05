@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
-from request_body import RequestBody
-from services import *
+from api.request_body import RequestBody
+from api.services import *
 """ defining api router """
 
 router = APIRouter() # fast router

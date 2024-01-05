@@ -1,5 +1,6 @@
 from model.EntityCustomModel import EntityModel
 from dataloader.EntityDataset import EntityDataset
+from setup_predictor.setup_model import setup_model
 from setup_predictor.setup_predictor import *
 
 """ code test for ner pos """
