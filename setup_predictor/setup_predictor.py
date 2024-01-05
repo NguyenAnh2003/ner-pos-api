@@ -6,6 +6,12 @@ from model.EntityCustomModel import EntityModel
 
 # setup model
 def setup_model():
+    """
+    This function used to load pre-trained model with init structure
+    load pre-trained params to state_dict and resulting pre-trained model.
+    Init device with "cuda" or "cpu"
+    :return: pre-trained model
+    """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     meta_data = joblib.load("../test_models/encoded.bin")
     enc_pos = meta_data["enc_pos"]

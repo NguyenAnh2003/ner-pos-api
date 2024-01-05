@@ -5,16 +5,25 @@ from services import *
 
 router = APIRouter() # fast router
 
-@router.post('/danangnlp/ner', status_code=status.HTTP_201_CREATED)
-async def entity_extraction(request: RequestBody):
-    ner_result = await ner_service(request.sentence)
+@router.post('/danangnlp/ner', status_code=status.HTTP_200_OK)
+def ner_route(request: RequestBody):
+    ner_result = ner_service(request.sentence)
     return ner_result
 
-@router.post('/danangnlp/pos', status_code=status.HTTP_201_CREATED)
-async def pos_tag(request: RequestBody):
+@router.post('/danangnlp/pos', status_code=status.HTTP_200_OK)
+def pos_route(request: RequestBody):
     """
     :param request: raw sentence
     :return: Pos response model
     """
-    pos_result = await pos_service(request.sentence)
+    pos_result = pos_service(request.sentence)
     return pos_result
+
+@router.post('/danangnlp/wordsegment', status_code=status.HTTP_200_OK)
+def segment_route(request: RequestBody):
+    """ This function use external api then must be async function
+    :param request: raw sentence
+    :return: normalized sentence
+    """
+    # code for word segment
+    return

@@ -1,4 +1,7 @@
 from pydantic import BaseModel
-class ResponseNER(BaseModel):
-    """ response structure for ner result """
+
+class ResponseNER():
+    """ response structure for ner result
+    init response model for NER
+    """
     pass

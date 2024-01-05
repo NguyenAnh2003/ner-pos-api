@@ -1,8 +1,12 @@
+from model.EntityCustomModel import EntityModel
+from dataloader.EntityDataset import EntityDataset
+from setup_predictor.setup_predictor import *
 
-n = int(input())
-n=bin(n)[2:].split("0")
-max=0
-for i in n:
-    if len(i)> max :
-        max = len(i)
-print(max)
+""" code test for ner pos """
+def testing_mode(rsentence: str):
+    """
+    :param rsentence: raw sentence for testing prediction
+    ner, pos tag of model.
+    :return: tokens with tag(ner, pos)
+    """
+    model = setup_model() # setup model

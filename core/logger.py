@@ -6,3 +6,4 @@ def setup_logger():
     config core
     :return: core: logging
     """
+    logging.basicConfig() #
