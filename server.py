@@ -4,5 +4,4 @@ from config.app_config import setup_app
 
 # include defined app
 app = setup_app()
-
 app.include_router(router) # include route defined

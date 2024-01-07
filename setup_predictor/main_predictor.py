@@ -2,7 +2,7 @@ import torch
 import re
 import numpy as np
 import requests
-from dataloader.EntityDataset import EntityDataset
+from custom_dataset.EntityDataset import EntityDataset
 from setup_predictor.loader import model, device, enc_tag, enc_pos
 from dotenv import load_dotenv
 import os
