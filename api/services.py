@@ -1,4 +1,4 @@
-from setup_predictor.setup_predictor import *
+from setup.setup_predictor import *
 """ usage for solving business logic """
 
 def ner_service(raw_sentence):

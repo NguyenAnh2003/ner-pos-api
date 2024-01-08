@@ -3,7 +3,7 @@ from utils.utils import load_params
 from transformers import AutoTokenizer
 
 class EntityDataset:
-    def __init__(self, texts, pos, tags, path: str = "../config/configs-variables.yml"):
+    def __init__(self, texts, pos, tags, path: str = "./config/configs-variables.yml"):
         super().__init__()
         """ setup params directly in this file """
         self.params = load_params(path) # setup params

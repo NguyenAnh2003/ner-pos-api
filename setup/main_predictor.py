@@ -3,7 +3,7 @@ import re
 import numpy as np
 import requests
 from custom_dataset.EntityDataset import EntityDataset
-from loader import model, device, enc_tag, enc_pos
+from setup.loader import model, device, enc_tag, enc_pos
 from dotenv import load_dotenv
 import os
 load_dotenv() # dotenv config

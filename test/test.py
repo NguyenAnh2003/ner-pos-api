@@ -1,7 +1,7 @@
 from model.EntityCustomModel import EntityModel
 from custom_dataset.EntityDataset import EntityDataset
-from setup_predictor.setup_model import setup_model
-from setup_predictor.setup_predictor import *
+from setup.setup_model import setup_model
+from setup.setup_predictor import *
 
 """ code test for ner pos """
 def testing_mode(rsentence: str):

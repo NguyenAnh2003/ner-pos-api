@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from setup_predictor.setup_predictor import *
-from setup_predictor.main_predictor import create_word_list
+from setup.setup_predictor import *
+from setup.main_predictor import create_word_list
 from api.request_body import RequestBody
 
 app = FastAPI()

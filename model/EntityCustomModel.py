@@ -6,7 +6,7 @@ import torch.nn.functional as F
 from utils.utils import load_params
 
 class EntityModel(nn.Module):
-    def __init__(self, num_tag, num_pos, params: str = "../config/configs-variables.yml"):
+    def __init__(self, num_tag, num_pos, params: str = "./config/configs-variables.yml"):
         super(EntityModel, self).__init__()
         self.params = load_params(params) # config direcly params
         self.num_tag = num_tag

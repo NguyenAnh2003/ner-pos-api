@@ -1,4 +1,4 @@
-from setup_predictor.main_predictor import annotate_text
+from setup.main_predictor import annotate_text
 from utils.utils import *
 
 # setup NER predictor
