@@ -1,22 +1,24 @@
-from utils.helpers import log_soft
 import torch.nn as nn
 from torchcrf import CRF
 import torch
 import transformers
-from config.config import config
+import torch.nn.functional as F
+from utils.utils import load_params
 
 class EntityModel(nn.Module):
-    def __init__(self, num_tag, num_pos):
+    def __init__(self, num_tag, num_pos, params: str = "./config/configs-variables.yml"):
         super(EntityModel, self).__init__()
+        self.params = load_params(params) # config direcly params
         self.num_tag = num_tag
         self.num_pos = num_pos
-        self.phobert = transformers.AutoModel.from_pretrained(config.BASE_MODEL_PATH,return_dict=False)
+        self.phobert = transformers.AutoModel.from_pretrained(self.params['base_model'],return_dict=False)
         self.bert_drop_1 = nn.Dropout(0.3)
         self.bert_drop_2 = nn.Dropout(0.3)
         self.out_tag = nn.Linear(768, self.num_tag)
         self.out_pos = nn.Linear(768, self.num_pos)
         self.crf = CRF(num_tag, batch_first = True)
         self.crf_pos = CRF(num_pos, batch_first = True)
+        self.log_soft = F.log_softmax
     def forward(
         self,
         ids,
@@ -40,7 +42,7 @@ class EntityModel(nn.Module):
         # pos_probs = F.softmax(pos, dim=-1)
 
         if target_tag is not None:
-            loss_tag = -self.crf(log_soft(tag, 2), target_tag, mask=mask.type(torch.uint8), reduction='mean')
+            loss_tag = -self.crf(self.log_soft(tag, 2), target_tag, mask=mask.type(torch.uint8), reduction='mean')
             prediction = self.crf.decode(tag, mask=mask.type(torch.uint8))
 
 
@@ -49,7 +51,7 @@ class EntityModel(nn.Module):
             # return prediction
 
         if target_pos is not None:
-            loss_pos = -self.crf_pos(log_soft(pos, 2), target_pos, mask=mask.type(torch.uint8), reduction='mean')
+            loss_pos = -self.crf_pos(self.log_soft(pos, 2), target_pos, mask=mask.type(torch.uint8), reduction='mean')
             pos_prediction = self.crf_pos.decode(pos, mask=mask.type(torch.uint8))
 
 

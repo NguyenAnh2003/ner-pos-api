@@ -1,3 +1,6 @@
 test_models
 venv
 .env
+dev.md
+temp
+**/__pycache__/
