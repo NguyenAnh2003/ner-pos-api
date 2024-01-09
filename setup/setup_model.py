@@ -22,4 +22,4 @@ def setup_model():
         map_location=torch.device('cpu'))) # load params of pre-trained model
     model.to(device) # setup model to device {GPU, CPU}
 
-    return model
+    return device, model, enc_pos, enc_tag

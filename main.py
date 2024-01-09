@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from setup.setup_predictor import *
-from setup.main_predictor import create_word_list
+from setup.setup_predictor import word_segment
 from api.request_body import RequestBody
 
 app = FastAPI()
@@ -16,8 +16,6 @@ async def index():
 @app.post('/nlp/ner')
 def ner_prediction(req: RequestBody):
     tokens = ner_predictor(req.sentence)
-def ner_prediction(req: RequestBody):
-    tokens = ner_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]
@@ -30,8 +28,6 @@ def ner_prediction(req: RequestBody):
 @app.post('/nlp/pos')
 def pos_prediction(req: RequestBody):
     tokens = pos_predictor(req.sentence)
-def pos_prediction(req: RequestBody):
-    tokens = pos_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]
@@ -41,5 +37,5 @@ def pos_prediction(req: RequestBody):
 
 @app.post('/nlp/segment')
 def segment(req: RequestBody):
-    tokens = [create_word_list(req.sentence)]
+    tokens = [word_segment(req.sentence)]
     return tokens

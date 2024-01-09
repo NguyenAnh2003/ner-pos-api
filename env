@@ -1,0 +1,2 @@
+SEGMENTER_API="https://viettelgroup.ai/nlp/api/v1/segment"
+OUR_SEGMENTER_API=http://127.0.0.1:8000/api/word_segmentation
