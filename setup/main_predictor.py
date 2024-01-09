@@ -10,7 +10,7 @@ load_dotenv() # dotenv config
 # dotenv_path = join(dirname(__file__), '.env')
 # load_dotenv(dotenv_path)
 
-API = os.getenv("OUR_SEGMENTER_API")
+API = os.getenv("SEGMENTER_API") # external
 
 
 def sent_seg(text):
@@ -73,4 +73,5 @@ def final(word_list):
 
 
 def annotate_text(text: str):
+    print(f"Text: {text}")
     return final(create_word_list(text))

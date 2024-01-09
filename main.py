@@ -15,9 +15,9 @@ async def index():
 # predict ner
 @app.post('/nlp/ner')
 def ner_prediction(req: RequestBody):
-    tokens = ner_predictor(req.string)
+    tokens = ner_predictor(req.sentence)
 def ner_prediction(req: RequestBody):
-    tokens = ner_predictor(req.string)
+    tokens = ner_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]
@@ -29,9 +29,9 @@ def ner_prediction(req: RequestBody):
 # predict pos
 @app.post('/nlp/pos')
 def pos_prediction(req: RequestBody):
-    tokens = pos_predictor(req.string)
+    tokens = pos_predictor(req.sentence)
 def pos_prediction(req: RequestBody):
-    tokens = pos_predictor(req.string)
+    tokens = pos_predictor(req.sentence)
     result = []
     for sublist in tokens:
         word = sublist[0]

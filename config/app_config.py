@@ -1,7 +1,7 @@
 import fastapi
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-
+from api.routes import router
 def setup_app():
     try:
         """ try cactch exception to catch error avoid crash app """
@@ -16,7 +16,8 @@ def setup_app():
             allow_methods=["*"],
             allow_headers=["*"],
         )
+        app.include_router(router)
+        return app
     except:
         # throw exception
-        pass
-    return app
+        raise HTTPException(status_code=500, detail="Cannot host app")
