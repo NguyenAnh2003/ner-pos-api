@@ -3,16 +3,18 @@ import torch
 import re
 import numpy as np
 import requests
+import os
 from custom_dataset.EntityDataset import EntityDataset
 from setup.setup_model import setup_model
 from dotenv import load_dotenv
+load_dotenv()
+
 # setup NER predictor
 def ner_predictor(sentence: str):
     """ NER predictor
     :param sentence: user input
     :return: format string result
     """
-    print(f"")
     text_process = annotate_text(sentence)
     data = [(text[0], text[1]) for text in text_process]
     tokens = []
@@ -54,10 +56,12 @@ def pos_predictor(sentence: str):
         # if tag not in tokens:
         tokens.append((word, tag))
     return convert_pos(tokens)
+
 #word_segmentation
 def word_segment(text: str):
     # API for segmentation
-    API = "https://viettelgroup.ai/nlp/api/v1/segment"
+    API = os.environ.get("SEGMENTER_API")
+    
     # sentences segment
     sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
     sentences = re.split(sent_reg, text)
@@ -81,6 +85,7 @@ def word_segment(text: str):
 
         word_list2.append(word_list)
     return word_list2
+
 # result of text -> ner pos 
 def annotate_text(text):
     result = []
