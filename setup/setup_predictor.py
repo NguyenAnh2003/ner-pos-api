@@ -7,6 +7,8 @@ import os
 from custom_dataset.EntityDataset import EntityDataset
 from setup.setup_model import setup_model
 from dotenv import load_dotenv
+from setup.sys_utils import setup_device
+from setup.setup_encoded import setup_encoded_data
 load_dotenv()
 
 # setup NER predictor
@@ -88,9 +90,17 @@ def word_segment(text: str):
 
 # result of text -> ner pos 
 def annotate_text(text):
+    # init
     result = []
     word_list= word_segment(text)
-    device,model,enc_pos,enc_tag = setup_model()
+
+    # setup device
+    device = setup_device()
+    # setup encoded ner and pos tags
+    enc_pos, enc_tag = setup_encoded_data() #
+    # setup mode
+    model= setup_model(enc_tag=enc_tag, enc_pos=enc_pos, device=device)
+    #
     for i in word_list:
         temp = []
         test_dataset = EntityDataset(
