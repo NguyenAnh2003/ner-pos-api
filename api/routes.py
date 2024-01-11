@@ -1,23 +1,26 @@
 from fastapi import APIRouter, status, HTTPException
 from api.request_body import RequestBody
 from api.services import *
+from api.response_model import *
 """ defining api router """
 
 router = APIRouter()  # fast router
 
 
-@router.post('/danangnlp/ner', status_code=status.HTTP_200_OK)
+@router.post('/danangnlp/ner', response_model=ResponseNER, status_code=status.HTTP_200_OK)
 def ner_route(request: RequestBody):
     try:
         ner_result = ner_service(request.sentence)
-        return ner_result
+        response_data = ResponseNER(
+            data=[WordNER(**item) for item in ner_result])
+        return response_data
     except Exception as e:
         # Handle other general exceptions
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Internal Server Error")
 
 
-@router.post('/danangnlp/pos', status_code=status.HTTP_200_OK)
+@router.post('/danangnlp/pos', response_model=ResponsePOS, status_code=status.HTTP_200_OK)
 def pos_route(request: RequestBody):
     """
     :param request: raw sentence
@@ -25,7 +28,9 @@ def pos_route(request: RequestBody):
     """
     try:
         pos_result = pos_service(request.sentence)
-        return pos_result
+        response_data = ResponsePOS(
+            data=[WordPOS(**item) for item in pos_result])
+        return response_data
     except Exception as e:
         # Handle other general exceptions
         raise HTTPException(

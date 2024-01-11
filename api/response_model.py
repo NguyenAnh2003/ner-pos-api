@@ -1,7 +1,20 @@
 from pydantic import BaseModel
+from typing import List
 
-class ResponseNER():
-    """ response structure for ner result
-    init response model for NER
-    """
-    pass
+
+class WordNER(BaseModel):
+    word: str
+    tag: str
+    color: str
+
+
+class ResponseNER(BaseModel):
+    data: List[WordNER]
+
+
+class WordPOS(BaseModel):
+    word: str
+    tag: str
+
+class ResponsePOS(BaseModel):
+    data: List[WordPOS]
