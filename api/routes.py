@@ -6,7 +6,6 @@ from api.response_model import *
 
 router = APIRouter()  # fast router
 
-
 @router.post('/danangnlp/ner', response_model=ResponseNER, status_code=status.HTTP_200_OK)
 def ner_route(request: RequestBody):
     try:

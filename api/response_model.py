@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import List
 
-
 class WordNER(BaseModel):
     word: str
     tag: str
