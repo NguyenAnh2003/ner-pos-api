@@ -24,7 +24,6 @@ def convert_pos(tokens):
     #
     result = []
     for i in tokens:
-        # print('pos', i[0], '-', switch(i[1]))
         result.append((i[0], switch(i[1])))
     return result
 

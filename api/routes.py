@@ -16,6 +16,10 @@ model = setup_model(enc_tag, enc_pos, device)
 
 @router.post('/danangnlp/ner', response_model=ResponseNER, status_code=status.HTTP_200_OK)
 def ner_route(request: RequestBody):
+    """
+    :param request: raw sentence
+    :return: NER response model
+    """
     try:
         ner_result = ner_service(request.sentence, model)
         response_data = ResponseNER(
@@ -31,7 +35,7 @@ def ner_route(request: RequestBody):
 def pos_route(request: RequestBody):
     """
     :param request: raw sentence
-    :return: Pos response model
+    :return: POS response model
     """
     try:
         pos_result = pos_service(request.sentence, model)
