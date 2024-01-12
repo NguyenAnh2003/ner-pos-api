@@ -2,14 +2,22 @@ from fastapi import APIRouter, status, HTTPException, Depends
 from api.request_body import RequestBody
 from api.services import *
 from api.response_model import *
+from setup.setup_model import setup_model
+from setup.setup_encoded import setup_encoded_data
+from setup.sys_utils import setup_device
 """ defining api router """
 
 router = APIRouter()  # fast router
 
+# setup model
+device = setup_device() # setup device
+enc_pos, enc_tag = setup_encoded_data() # encoded data
+model = setup_model(enc_tag, enc_pos, device)
+
 @router.post('/danangnlp/ner', response_model=ResponseNER, status_code=status.HTTP_200_OK)
 def ner_route(request: RequestBody):
     try:
-        ner_result = ner_service(request.sentence)
+        ner_result = ner_service(request.sentence, model)
         response_data = ResponseNER(
             data=[WordNER(**item) for item in ner_result])
         return response_data
@@ -26,7 +34,7 @@ def pos_route(request: RequestBody):
     :return: Pos response model
     """
     try:
-        pos_result = pos_service(request.sentence)
+        pos_result = pos_service(request.sentence, model)
         response_data = ResponsePOS(
             data=[WordPOS(**item) for item in pos_result])
         return response_data

@@ -12,12 +12,12 @@ from setup.setup_encoded import setup_encoded_data
 load_dotenv()
 
 # setup NER predictor
-def ner_predictor(sentence: str):
+def ner_predictor(sentence: str, model):
     """ NER predictor
     :param sentence: user input
     :return: format string result
     """
-    text_process = annotate_text(sentence)
+    text_process = annotate_text(sentence, model)
     data = [(text[0], text[1]) for text in text_process]
     tokens = []
     filtered_data = []
@@ -46,12 +46,12 @@ def ner_predictor(sentence: str):
     return convert_ner(tokens)
 
 # setup pos predictor
-def pos_predictor(sentence: str):
+def pos_predictor(sentence: str, model):
     """
     :param sentence: user input
     :return: result POS tags
     """
-    text_process = annotate_text(sentence)
+    text_process = annotate_text(sentence, model)
     tokens = []
     for token in text_process:
         word, tag = token[0], token[2]
@@ -89,18 +89,16 @@ def word_segment(text: str):
     return word_list2
 
 # result of text -> ner pos 
-def annotate_text(text):
+def annotate_text(text, model):
     # init
     result = []
     word_list= word_segment(text)
 
-    # setup device
+    # # setup device
     device = setup_device()
-    # setup encoded ner and pos tags
+    # # setup encoded ner and pos tags
     enc_pos, enc_tag = setup_encoded_data() #
-    # setup mode
-    model= setup_model(enc_tag=enc_tag, enc_pos=enc_pos, device=device)
-    #
+
     for i in word_list:
         temp = []
         test_dataset = EntityDataset(
