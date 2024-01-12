@@ -29,7 +29,7 @@ def ner_predictor(sentence: str):
     filtered_data = [item for item in data if item[1] != 'I-PER' and item[1]
                      != 'I-LOC' and item[1] != 'I-MISC' and item[1] != 'I-ORG']
 
-    # including color for streamlit in FE
+    # including color for NER 
     for token in filtered_data:
         if "PER" in token[1]:
             tokens.append((token[0], "PERSON", "#f5cac3"))
