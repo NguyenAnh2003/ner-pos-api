@@ -1,11 +1,10 @@
-from fastapi import APIRouter, status, HTTPException
+from fastapi import APIRouter, status, HTTPException, Depends
 from api.request_body import RequestBody
 from api.services import *
 from api.response_model import *
 """ defining api router """
 
 router = APIRouter()  # fast router
-
 
 @router.post('/danangnlp/ner', response_model=ResponseNER, status_code=status.HTTP_200_OK)
 def ner_route(request: RequestBody):
