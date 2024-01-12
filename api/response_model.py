@@ -4,7 +4,7 @@ from typing import List
 class WordNER(BaseModel):
     """ structure for one word with NER 
     attributes:
-        word (str): The actual word in the text.
+        word (str): The actual word in the text input.
         tag (str): The NER tag associated with the word.
         color (str): A color code or name associated with the NER tag for visualization purposes.
     """
@@ -24,7 +24,7 @@ class ResponseNER(BaseModel):
 class WordPOS(BaseModel):
     """ structure for one word with POS
     attributes:
-        word (str): The actual word in the text.
+        word (str): The actual word in the text input.
         tag (str): The POS tag associated with the word
     """
     word: str
