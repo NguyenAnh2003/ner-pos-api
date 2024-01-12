@@ -79,7 +79,6 @@ def word_segment(text: str):
                 words = word.split()
                 word="_".join(words)
                 word_list.append(word)
-            print(word_list)
         else:
             print('Error:', response.status_code) #
 

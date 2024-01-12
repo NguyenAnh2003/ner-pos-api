@@ -7,7 +7,6 @@ def ner_service(raw_sentence):
         tokens = ner_predictor(raw_sentence)
         result = [{"word": word, "tag": tag, "color": color}
                   for word, tag, color in tokens]
-        print(result)
         return result
     except Exception as e:
         raise Exception("Error processing NER") from e
@@ -17,7 +16,6 @@ def pos_service(raw_sentence):
     try:
         tokens = pos_predictor(raw_sentence)
         result = [{"word": word, "tag": tag} for word, tag in tokens]
-        print(result)
         return result
     except Exception as e:
         raise Exception("Error processing POS") from e
