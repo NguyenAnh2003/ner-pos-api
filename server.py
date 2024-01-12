@@ -3,3 +3,5 @@ from config.app_config import setup_app
 
 # include defined app
 app = setup_app()
+
+# uvicorn server:app --reload
