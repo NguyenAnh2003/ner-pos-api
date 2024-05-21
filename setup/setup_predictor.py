@@ -12,12 +12,16 @@ from setup.setup_encoded import setup_encoded_data
 load_dotenv()
 
 # setup NER predictor
+
+
 def ner_predictor(sentence: str, model):
     """ NER predictor
     :param sentence: user input
     :return: format string result
     """
     text_process = annotate_text(sentence, model)
+    print(1, text_process)
+    print(model)
     data = [(text[0], text[1]) for text in text_process]
     tokens = []
     filtered_data = []
@@ -31,7 +35,7 @@ def ner_predictor(sentence: str, model):
     filtered_data = [item for item in data if item[1] != 'I-PER' and item[1]
                      != 'I-LOC' and item[1] != 'I-MISC' and item[1] != 'I-ORG']
 
-    # including color for NER 
+    # including color for NER
     for token in filtered_data:
         if "PER" in token[1]:
             tokens.append((token[0], "PERSON", "#f5cac3"))
@@ -46,6 +50,8 @@ def ner_predictor(sentence: str, model):
     return convert_ner(tokens)
 
 # setup pos predictor
+
+
 def pos_predictor(sentence: str, model):
     """
     :param sentence: user input
@@ -59,44 +65,53 @@ def pos_predictor(sentence: str, model):
         tokens.append((word, tag))
     return convert_pos(tokens)
 
-#word_segmentation
+# word_segmentation
+
+
 def word_segment(text: str):
     # API for segmentation
-    API = os.environ.get("SEGMENTER_API")
-    
+    API = os.environ.get("OUR_SEGMENTER_API")
+
     # sentences segment
     sent_reg = r'(?<!\w.\s\w.)(?<![A-Z][a-z]\.)(?<=\n|\.|\?|\!)\s'
     sentences = re.split(sent_reg, text)
-    
-    word_list2=[]
     for sentence in sentences:
-        word_list = [] # init word list
-        word_list1=[]
-        response = requests.post(API, json={"sentence": sentence},
-                                 headers={'Content-Type': 'application/json', 'token': 'Voice - tm7M...'})
+        word_list = []
+        rs = []
+        payload = {
+            "string": sentence
+        }
+        headers = {
+            'Content-Type': 'application/json',
+        }
+        response = requests.post(API, json=payload, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            word_list1=[item['word'] for item in data['result']]
-            for word in word_list1:
-                words = word.split()
-                word="_".join(words)
-                word_list.append(word)
+            print(data)
+            ls = [i for i in data['tag']]
+            for i in ls:
+                print(i)
+                word_list.append(i)
+            print(word_list)
         else:
-            print('Error:', response.status_code) #
+            print('Error:', response.status_code)
 
-        word_list2.append(word_list)
-    return word_list2
+        rs.append(word_list)
+    print(rs)
+    return rs
 
-# result of text -> ner pos 
+# result of text -> ner pos
+
+
 def annotate_text(text, model):
     # init
     result = []
-    word_list= word_segment(text)
+    word_list = word_segment(text)
 
     # # setup device
     device = setup_device()
     # # setup encoded ner and pos tags
-    enc_pos, enc_tag = setup_encoded_data() #
+    enc_pos, enc_tag = setup_encoded_data()
 
     for i in word_list:
         temp = []
@@ -110,17 +125,16 @@ def annotate_text(text, model):
             data = test_dataset[0]
             for k, v in data.items():
                 data[k] = v.to(device).unsqueeze(0)
-            tag, pos, _, llll =  model(**data)
+            tag, pos, _, llll = model(**data)
 
         tag = tag[0]
         pos = pos[0]
         tag = np.array(tag)
         poss = np.array(pos)
-        ner =  enc_tag.inverse_transform(tag.flatten())
+        ner = enc_tag.inverse_transform(tag.flatten())
         pos = enc_pos.inverse_transform(poss.flatten())
 
         for j in range(len(i)):
             temp.append((i[j], ner[j], pos[j]))
         result += temp
     return result
-
